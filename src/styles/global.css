@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "InterVariable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans--font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss03";
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  :root:where(.dark) {
+    color-scheme: dark;
+  }
+}
+
+/* Long-form article styling — see prose-content guideline. */
+.prose {
+  color: var(--color-stone-700);
+  font-size: var(--text-base);
+  line-height: --spacing(7);
+  text-wrap: pretty;
+  @variant dark {
+    color: var(--color-stone-300);
+  }
+}
+.prose :where(* + *) {
+  margin-top: --spacing(6);
+}
+.prose :where(h2) {
+  font-family: var(--font-serif);
+  font-size: var(--text-3xl);
+  letter-spacing: -0.01em;
+  color: var(--color-stone-900);
+  margin-top: --spacing(14);
+  @variant dark {
+    color: var(--color-stone-100);
+  }
+}
+.prose :where(h3) {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  color: var(--color-stone-900);
+  margin-top: --spacing(10);
+  @variant dark {
+    color: var(--color-stone-100);
+  }
+}
+.prose :where(a) {
+  color: var(--color-orange-800);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: --alpha(var(--color-orange-800) / 40%);
+  @variant dark {
+    color: var(--color-orange-400);
+    text-decoration-color: --alpha(var(--color-orange-400) / 40%);
+  }
+  @variant hover {
+    text-decoration-color: currentcolor;
+  }
+}
+.prose :where(strong) {
+  color: var(--color-stone-900);
+  font-weight: var(--font-weight-semibold);
+  @variant dark {
+    color: var(--color-stone-100);
+  }
+}
+.prose :where(ul) {
+  list-style: disc;
+  padding-left: --spacing(6);
+}
+.prose :where(ol) {
+  list-style: decimal;
+  padding-left: --spacing(6);
+}
+.prose :where(li) {
+  margin-top: --spacing(2);
+}
+.prose :where(blockquote) {
+  border-left: 2px solid var(--color-stone-300);
+  padding-left: --spacing(5);
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  color: var(--color-stone-600);
+  font-style: italic;
+  @variant dark {
+    border-color: var(--color-stone-700);
+    color: var(--color-stone-400);
+  }
+}
+.prose :where(code) {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--color-stone-100);
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-sm);
+  @variant dark {
+    background: var(--color-stone-900);
+  }
+}
+.prose :where(pre) {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  background: var(--color-stone-100);
+  color: var(--color-stone-800);
+  padding: --spacing(5);
+  border-radius: var(--radius-xl);
+  overflow-x: auto;
+  @variant dark {
+    background: var(--color-stone-900);
+    color: var(--color-stone-200);
+  }
+}
+.prose :where(pre code) {
+  background: transparent;
+  padding: 0;
+}
+.prose :where(hr) {
+  border: none;
+  border-top: 1px solid var(--color-stone-200);
+  margin-top: --spacing(12);
+  margin-bottom: --spacing(12);
+  @variant dark {
+    border-color: var(--color-stone-800);
+  }
+}
+.prose :where(img) {
+  border-radius: var(--radius-xl);
+}

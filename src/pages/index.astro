@@ -1,0 +1,124 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/Container.astro';
+import Divider from '../components/Divider.astro';
+import Button from '../components/Button.astro';
+import ArticleRow from '../components/ArticleRow.astro';
+import TrackRow from '../components/TrackRow.astro';
+import BookRow from '../components/BookRow.astro';
+import PodcastCard from '../components/PodcastCard.astro';
+import { site } from '../data/site';
+import { tracks } from '../data/music';
+import { books } from '../data/books';
+import { podcasts } from '../data/podcasts';
+import { work } from '../data/work';
+import { articleMeta } from '../lib/format';
+
+const articles = (await getCollection('articles'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 4);
+---
+
+<Layout>
+  <!-- hero -->
+  <Container class="pt-20 pb-24 sm:pt-28">
+    <p class="mb-8 font-mono text-xs tracking-wide text-orange-800 uppercase dark:text-orange-400">{site.role}</p>
+    <h1 class="max-w-[18ch] font-serif text-6xl leading-[0.95] tracking-tight text-balance text-stone-900 dark:text-stone-100 sm:text-7xl md:text-8xl">
+      {site.tagline}
+    </h1>
+    <p class="mt-10 max-w-[52ch] text-xl text-pretty text-stone-600 dark:text-stone-400 sm:text-2xl">{site.bio}</p>
+    <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3">
+      <Button href="/articles">Read the writing</Button>
+      <Button href="/music" variant="link">Listen to the music</Button>
+    </div>
+  </Container>
+
+  <Divider />
+
+  <!-- articles -->
+  <Container class="py-20">
+    <div class="mb-12 flex items-baseline justify-between">
+      <h2 class="font-serif text-4xl tracking-tight text-stone-900 dark:text-stone-100 sm:text-5xl">Articles</h2>
+      <a href="/articles" class="text-sm text-stone-500 transition-colors hover:text-orange-800 dark:text-stone-400 dark:hover:text-orange-400">All writing →</a>
+    </div>
+    <ul role="list" class="divide-y divide-stone-200 dark:divide-stone-800">
+      {articles.map((a) => (
+        <li>
+          <ArticleRow
+            href={`/articles/${a.id}`}
+            title={a.data.title}
+            note={a.data.description}
+            meta={articleMeta(a.data.kind, a.data.pubDate)}
+          />
+        </li>
+      ))}
+    </ul>
+  </Container>
+
+  <Divider />
+
+  <!-- music + books -->
+  <Container class="grid gap-16 py-20 lg:grid-cols-[3fr_2fr]">
+    <div>
+      <div class="mb-10 flex items-baseline justify-between">
+        <h2 class="font-serif text-4xl tracking-tight text-stone-900 dark:text-stone-100 sm:text-5xl">Music</h2>
+        <a href="/music" class="text-sm text-stone-500 transition-colors hover:text-orange-800 dark:text-stone-400 dark:hover:text-orange-400">All tracks →</a>
+      </div>
+      <ul role="list" class="space-y-1">
+        {tracks.slice(0, 4).map((t) => (
+          <li><TrackRow title={t.title} meta={t.meta} len={t.len} /></li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <div class="mb-10 flex items-baseline justify-between">
+        <h2 class="font-serif text-4xl tracking-tight text-stone-900 dark:text-stone-100 sm:text-5xl">Books</h2>
+        <a href="/books" class="text-sm text-stone-500 transition-colors hover:text-orange-800 dark:text-stone-400 dark:hover:text-orange-400">The shelf →</a>
+      </div>
+      <ul role="list" class="space-y-6">
+        {books.slice(0, 4).map((b) => (
+          <li><BookRow title={b.title} author={b.author} /></li>
+        ))}
+      </ul>
+    </div>
+  </Container>
+
+  <Divider />
+
+  <!-- podcasts -->
+  <Container class="py-20">
+    <div class="mb-12 flex items-baseline justify-between">
+      <h2 class="font-serif text-4xl tracking-tight text-stone-900 dark:text-stone-100 sm:text-5xl">Podcasts</h2>
+      <a href="/podcasts" class="text-sm text-stone-500 transition-colors hover:text-orange-800 dark:text-stone-400 dark:hover:text-orange-400">All episodes →</a>
+    </div>
+    <ul role="list" class="grid gap-px overflow-hidden rounded-2xl border border-stone-200 bg-stone-200 dark:border-stone-800 dark:bg-stone-800 sm:grid-cols-3">
+      {podcasts.slice(0, 3).map((p) => (
+        <li class="flex"><PodcastCard class="w-full" title={p.title} show={p.show} meta={p.meta} /></li>
+      ))}
+    </ul>
+  </Container>
+
+  <Divider />
+
+  <!-- about -->
+  <Container class="grid gap-12 py-20 lg:grid-cols-[2fr_3fr]">
+    <h2 class="font-serif text-4xl tracking-tight text-stone-900 dark:text-stone-100 sm:text-5xl">About</h2>
+    <div>
+      <p class="max-w-[60ch] text-xl text-pretty text-stone-600 dark:text-stone-400">
+        I grew up between Tehran and London and started programming at twelve. Since then I've built and sold software, run trading systems at a bank, and kept writing the whole way through. Today I split my time between England and California.
+      </p>
+      <dl class="mt-12 space-y-6">
+        {work.slice(0, 4).map((w) => (
+          <div class="grid gap-1 sm:grid-cols-[1fr_2fr] sm:gap-8">
+            <dt class="font-serif text-xl text-stone-900 dark:text-stone-100">{w.name}</dt>
+            <dd class="text-base text-stone-500 dark:text-stone-400">
+              <span class="text-stone-700 dark:text-stone-300">{w.role}</span> — {w.note}
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <a href="/about" class="mt-10 inline-block text-sm text-stone-500 transition-colors hover:text-orange-800 dark:text-stone-400 dark:hover:text-orange-400">More about me →</a>
+    </div>
+  </Container>
+</Layout>

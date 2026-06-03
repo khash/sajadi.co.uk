@@ -1,0 +1,44 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Container from '../../components/Container.astro';
+import { formatDate } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map((article) => ({
+    params: { slug: article.id },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+---
+
+<Layout title={article.data.title} description={article.data.description}>
+  <Container class="py-16 sm:py-24">
+    <a href="/articles" class="font-mono text-xs tracking-wide text-stone-500 uppercase transition-colors hover:text-orange-800 dark:text-stone-400 dark:hover:text-orange-400">
+      ← Articles
+    </a>
+
+    <header class="mt-8 max-w-[68ch]">
+      <p class="font-mono text-xs tracking-wide text-orange-800 uppercase dark:text-orange-400">
+        {article.data.kind} · {formatDate(article.data.pubDate)}
+      </p>
+      <h1 class="mt-5 font-serif text-5xl tracking-tight text-pretty text-stone-900 dark:text-stone-100 sm:text-6xl">
+        {article.data.title}
+      </h1>
+    </header>
+
+    <div class="prose mt-12 max-w-[68ch]">
+      <Content />
+    </div>
+
+    <div class="mt-16 max-w-[68ch] border-t border-stone-200 pt-8 dark:border-stone-800">
+      <a href="/articles" class="text-sm text-stone-500 transition-colors hover:text-orange-800 dark:text-stone-400 dark:hover:text-orange-400">
+        ← Back to all writing
+      </a>
+    </div>
+  </Container>
+</Layout>

@@ -1,0 +1,28 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  note: string;
+  meta: string;
+  class?: string;
+}
+const { href, title, note, meta, class: className } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    'group flex flex-col gap-2 py-6 sm:flex-row sm:items-baseline sm:justify-between',
+    className,
+  ]}
+>
+  <div>
+    <h3 class="font-serif text-2xl text-stone-900 transition-colors group-hover:text-orange-800 dark:text-stone-100 dark:group-hover:text-orange-400 sm:text-3xl">
+      {title}
+    </h3>
+    <p class="mt-1 max-w-[60ch] text-base text-pretty text-stone-500 dark:text-stone-400">{note}</p>
+  </div>
+  <p class="shrink-0 font-mono text-xs tracking-wide text-stone-400 uppercase dark:text-stone-500 sm:pl-8">
+    {meta}
+  </p>
+</a>

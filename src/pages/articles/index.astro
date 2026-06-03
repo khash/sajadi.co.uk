@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Container from '../../components/Container.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ArticleRow from '../../components/ArticleRow.astro';
+import { articleMeta } from '../../lib/format';
+
+const articles = (await getCollection('articles')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<Layout title="Articles" description="Essays on software, systems, and the things that stay.">
+  <Container class="py-16 sm:py-24">
+    <PageHeader
+      eyebrow="Writing"
+      title="Articles"
+      subtitle="Essays on software, systems, patience, and the things that stay with me long after the screen goes dark."
+    />
+
+    <ul role="list" class="mt-14 divide-y divide-stone-200 dark:divide-stone-800">
+      {articles.map((a) => (
+        <li>
+          <ArticleRow
+            href={`/articles/${a.id}`}
+            title={a.data.title}
+            note={a.data.description}
+            meta={articleMeta(a.data.kind, a.data.pubDate)}
+          />
+        </li>
+      ))}
+    </ul>
+  </Container>
+</Layout>

@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/Container.astro';
+import PageHeader from '../components/PageHeader.astro';
+import TrackRow from '../components/TrackRow.astro';
+import { tracks } from '../data/music';
+---
+
+<Layout title="Music" description="Songs from the quiet hours — written late, mixed slowly.">
+  <Container class="py-16 sm:py-24">
+    <PageHeader
+      eyebrow="Sound"
+      title="Music"
+      subtitle="Songs from the quiet hours — written late, mixed slowly. A small catalogue that keeps growing."
+    />
+
+    <ul role="list" class="mt-12 max-w-2xl space-y-1">
+      {tracks.map((t) => (
+        <li><TrackRow title={t.title} meta={t.meta} len={t.len} /></li>
+      ))}
+    </ul>
+
+    <p class="mt-10 max-w-2xl font-mono text-xs tracking-wide text-stone-400 dark:text-stone-500">
+      Streaming links coming soon.
+    </p>
+  </Container>
+</Layout>

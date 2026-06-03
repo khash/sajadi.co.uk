@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/Container.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { work } from '../data/work';
+---
+
+<Layout title="About" description="Writer, engineer and founder — between Tehran, London and California.">
+  <Container class="py-16 sm:py-24">
+    <PageHeader eyebrow="About" title="A short history." />
+
+    <div class="mt-14 grid gap-12 lg:grid-cols-[2fr_3fr]">
+      <div class="prose max-w-[60ch] lg:col-start-2">
+        <p>
+          I grew up between Tehran and London and started programming at twelve. As a teenager I built and sold software to local businesses — clunky, useful things that taught me more than any course could.
+        </p>
+        <p>
+          Later I became a VP at <strong>Lehman Brothers</strong>, working on trading systems and fixed-income infrastructure. I learned how large systems really behave under stress, and what happens when the world stops matching their assumptions.
+        </p>
+        <p>
+          Since then I’ve spent my time building. I co-founded <strong>Cloud 66</strong>, became a founding principal at <strong>AltaCoda</strong>, and started <strong>OIFI</strong>, a non-profit focused on information access about Iran. Along the way I built <strong>Sentimnt</strong>, a personal search engine.
+        </p>
+        <p>
+          Outside of work I write, make music, and take wine far too seriously — regions, structure, balance, the slow patience of something getting better while you wait. I split my time between England and California.
+        </p>
+      </div>
+
+      <div class="lg:col-start-1 lg:row-start-1">
+        <h2 class="font-serif text-3xl tracking-tight text-stone-900 dark:text-stone-100">Work</h2>
+        <dl class="mt-6 divide-y divide-stone-200 dark:divide-stone-800">
+          {work.map((w) => (
+            <div class="py-5">
+              <dt class="flex items-baseline justify-between gap-3">
+                <span class="font-serif text-xl text-stone-900 dark:text-stone-100">
+                  {w.href ? (
+                    <a href={w.href} class="transition-colors hover:text-orange-800 dark:hover:text-orange-400">{w.name}</a>
+                  ) : (
+                    w.name
+                  )}
+                </span>
+                <span class="shrink-0 font-mono text-xs tracking-wide text-stone-400 uppercase dark:text-stone-500">{w.role}</span>
+              </dt>
+              <dd class="mt-1 text-base text-pretty text-stone-500 dark:text-stone-400">{w.note}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </Container>
+</Layout>
