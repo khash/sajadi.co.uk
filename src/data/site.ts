@@ -1,23 +1,36 @@
 export const site = {
   name: 'Kash Sajadi',
-  tagline: 'The things that stay.',
-  role: 'Writer · Engineer · Founder',
   bio: 'I build software and write about the things that stay with me long after the screen goes dark.',
   url: 'https://sajadi.co.uk',
-  description:
-    'Kash Sajadi — writer, engineer and founder. Essays, books, music and conversations from someone who builds software and writes about what stays.',
+  description: 'Kash Sajadi — software builder, writer and founder. Links to everything I make.',
 };
 
-export const nav = [
-  { label: 'Articles', href: '/articles' },
-  { label: 'Books', href: '/books' },
-  { label: 'Music', href: '/music' },
-  { label: 'Podcasts', href: '/podcasts' },
-  { label: 'About', href: '/about' },
+export interface Link {
+  name: string;
+  host: string;
+  note: string;
+  href: string;
+}
+
+export const sections: { title: string; links: Link[] }[] = [
+  {
+    title: 'Writing & music',
+    links: [
+      { name: 'The Private Opinion', host: 'thepo.page', note: 'Essays and long-form writing.', href: 'https://thepo.page' },
+      { name: 'xas', host: 'xas.band', note: 'Music that fuses memory, human and technology.', href: 'https://www.xas.band/' },
+    ],
+  },
+  {
+    title: 'Work',
+    links: [
+      { name: 'Cloud 66', host: 'cloud66.com', note: 'Co-founder. Tools to deploy and run applications.', href: 'https://www.cloud66.com' },
+      { name: 'AltaCoda', host: 'altacoda.io', note: 'Founding principal. A venture studio for enduring SaaS.', href: 'https://www.altacoda.io/' },
+      { name: 'OIFI', host: 'oifi.org', note: 'Founder. Making information about Iran freely accessible.', href: 'https://oifi.org/' },
+    ],
+  },
 ];
 
 export const socials = [
-  { label: 'X', handle: '@khash', href: 'https://x.com/khash' },
-  { label: 'GitHub', handle: 'khash', href: 'https://github.com/khash' },
-  { label: 'Instagram', handle: 'the.private.opinion', href: 'https://instagram.com/the.private.opinion' },
+  { label: 'X', href: 'https://x.com/khash' },
+  { label: 'GitHub', href: 'https://github.com/khash' },
 ];
